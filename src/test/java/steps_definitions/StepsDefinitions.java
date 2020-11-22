@@ -21,7 +21,6 @@ public class StepsDefinitions {
 
    protected WebDriver driver;
 
-
     @Before
     public void openGoogle(Scenario scenario){
 
@@ -33,7 +32,7 @@ public class StepsDefinitions {
 
     @Given("^I  open Google page$")
     public void iOpenGooglePage() {
-        driver.findElement(By.xpath("//*[@id='tsf']/div[2]/div[1]/div[1]/div/div[2]/input"));
+        driver.findElement(By.xpath("//div[contains(@class, 'pR49Ae gsfi')]"));
 
     }
 
