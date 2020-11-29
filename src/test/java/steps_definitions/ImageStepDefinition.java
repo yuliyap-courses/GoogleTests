@@ -1,8 +1,6 @@
 package steps_definitions;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
+import io.cucumber.java.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,45 +17,47 @@ import java.util.ArrayList;
 public class ImageStepDefinition {
     WebDriver driver;
 
-    @Before
+    @BeforeStep
     public void openGoogle(Scenario scenario){
-
         System.setProperty("webdriver.chrome.driver", "src/test/java/Driver/chromedriver.exe");
         WebDriver driver =  new ChromeDriver();
-        driver.get("https://www.google.by/");
+        driver.get("https://www.google.by/imghp?hl=ru&tab=wi&ogbl");
         this.driver = driver;
 
     }
-
-    @Given("I  based on Google page")
-    public void iBasedOnGooglePage() {
-        driver.findElement(By.xpath("//*[contains(text(), 'Картинки')]"));
+    @Given("I  based on Google Image page")
+    public void iBasedOnGoogleImagePage() {
+        driver.findElement
+                (By.xpath("//*[@id='hplogo']/div/span"));
     }
 
-    @When("I click to Image link")
-    public void iClickToImageLink() {
-        WebElement ImageLink = new WebDriverWait(driver, 60)
-                .until(ExpectedConditions.elementToBeClickable
-                        (By.xpath("//*[contains(text(), 'Картинки')]")));
-        ImageLink.click();
+    @When("I find search field")
+    public void iFindSearchField() {
+        //driver.get("https://www.google.by/imghp?hl=ru&tab=wi&ogbl");
+        WebElement SearchField = new WebDriverWait(driver, 90)
+                .until(ExpectedConditions.visibilityOfElementLocated(
+                        (By.xpath("//*[@id='sbtc']/div/div[2]/input"))));
+        SearchField.isDisplayed();
     }
 
     @Then("I based on GoogleImage")
     public void iBasedOnGoogleImage(){
+       // driver.get("https://www.google.by/imghp?hl=ru&tab=wi&ogbl");
         String result = "Картинки";
         WebElement ImageLogo = new WebDriverWait(driver, 60)
                 .until(ExpectedConditions.presenceOfElementLocated(
-                        (By.xpath("//div[contains(@class, 'logo-subtext'"))));
+                        (By.xpath("//*[@id='hplogo']/div/span"))));
                 ImageLogo.isDisplayed();
-        String actualResult= driver.findElement(By.xpath("//div[contains(@class, 'logo-subtext')]")).getText();
+        String actualResult= driver.findElement(By.xpath("//*[@id='hplogo']/div/span")).getText();
         Assert.assertEquals(actualResult, result, "Картинки");
     }
 
-    @After
+    @AfterStep
     public void closeDriver(Scenario scenario){
         driver.close();
     }
 
-
 }
 
+//https://www.toolsqa.com/selenium-webdriver/window-handle-in-selenium/
+ //https://qna.habr.com/q/630942
