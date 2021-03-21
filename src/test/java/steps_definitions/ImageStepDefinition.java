@@ -17,14 +17,14 @@ import java.util.ArrayList;
 public class ImageStepDefinition {
     WebDriver driver;
 
-    @BeforeStep
+ /*   @BeforeStep
     public void openGoogle(Scenario scenario){
         System.setProperty("webdriver.chrome.driver", "src/test/java/Driver/chromedriver.exe");
         WebDriver driver =  new ChromeDriver();
         driver.get("https://www.google.by/imghp?hl=ru&tab=wi&ogbl");
         this.driver = driver;
 
-    }
+    }*/
     @Given("I  based on Google Image page")
     public void iBasedOnGoogleImagePage() {
         driver.findElement
@@ -50,14 +50,7 @@ public class ImageStepDefinition {
                 ImageLogo.isDisplayed();
         String actualResult= driver.findElement(By.xpath("//*[@id='hplogo']/div/span")).getText();
         Assert.assertEquals(actualResult, result, "Картинки");
-    }
-
-    @AfterStep
-    public void closeDriver(Scenario scenario){
         driver.close();
     }
-
 }
 
-//https://www.toolsqa.com/selenium-webdriver/window-handle-in-selenium/
- //https://qna.habr.com/q/630942

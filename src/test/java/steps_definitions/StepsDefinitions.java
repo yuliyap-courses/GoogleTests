@@ -19,19 +19,22 @@ import org.testng.Assert;
 
 public class StepsDefinitions {
 
-   protected WebDriver driver;
+    protected WebDriver driver;
 
-    @Before
-    public void openGoogle(Scenario scenario){
+  /*  public void openGoogle(Scenario scenario){
 
         System.setProperty("webdriver.chrome.driver", "src/test/java/Driver/chromedriver.exe");
         WebDriver driver =  new ChromeDriver();
         driver.get("https://www.google.com/");
         this.driver = driver;
-    }
+    }*/
 
     @Given("^I  open Google page$")
     public void iOpenGooglePage() {
+        System.setProperty("webdriver.chrome.driver", "src/test/java/Driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.google.com/");
+        this.driver = driver;
         driver.findElement(By.xpath("//div[contains(@class, 'pR49Ae gsfi')]"));
 
     }
@@ -40,15 +43,15 @@ public class StepsDefinitions {
     public void iEnterMinskOnSearchField(String string) {
         WebElement SearchField = new WebDriverWait(driver, 60)
                 .until(ExpectedConditions.elementToBeClickable
-                        (By.xpath("//*[@id='tsf']/div[2]/div[1]/div[1]/div/div[2]/input")));
+                        (By.xpath("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input")));
         SearchField.sendKeys("Minsk");
-       }
+    }
 
     @When("^I click to Search button$")
-    public void iClickToSearchButton()  {
+    public void iClickToSearchButton() {
         WebElement SearchField = new WebDriverWait(driver, 60)
                 .until(ExpectedConditions.elementToBeClickable
-                        (By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input")));
+                        (By.xpath("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input")));
         SearchField.sendKeys("Minsk");
     }
 
@@ -59,17 +62,14 @@ public class StepsDefinitions {
 
         WebElement SearchField = new WebDriverWait(driver, 60)
                 .until(ExpectedConditions.elementToBeClickable
-                        (By.xpath("//*[@id='tsf']/div[2]/div[1]/div[1]/div/div[2]/input")));
+                        (By.xpath("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input")));
         SearchField.sendKeys("Minsk");
         SearchField.sendKeys(Keys.ENTER);
         Thread.sleep(3000);
-        String actualResult= driver.findElement(By.xpath("//*[@id=\"rso\"]/div[1]/div/div[1]/a/h3/span")).getText();
+        String actualResult = driver.findElement(By.xpath("//*[@id=\"rso\"]/div[1]/div[1]/div/div[1]/a/h3")).getText();
         Assert.assertEquals(actualResult, result, "Минск — Википедия");
-
-    }
-
-    @After
-    public void closeDriver(Scenario scenario){
         driver.close();
+
     }
+
 }
